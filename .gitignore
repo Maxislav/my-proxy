@@ -1,0 +1,5 @@
+# Project exclude paths
+/src/index.js
+/src/index.js.map
+/src/server-net.js
+/src/server-net.js.map
