@@ -1,23 +1,12 @@
-import * as https from 'https';
-import proxy from 'express-http-proxy'
 import express from 'express'
 
-import {HttpsProxyAgent} from 'https-proxy-agent'
-import * as net from 'net'
-
 import * as http from 'http';
-import {Server} from "net";
-// console.log(net)
+
 
 const server = express();
 const PORT = 9999;
 
-// new http.Server(server)
-//     .listen(PORT, () => {
-//         console.log(`=== node version ${process.version}`)
-//         console.log(`=== server open weather stated on port ${PORT} ===`)
-//     });
-// server.
+
 
 
 export const proxyOpenRain = (req: any, res: any) => {

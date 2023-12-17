@@ -1,0 +1,21 @@
+# proxy server
+
+## start
+````
+yarn install 
+yarn run tsc-be:w
+yarn run dev
+````
+
+## deploy and run
+
+````
+yarn global add pm2
+pm2 start ecosystem.config.js
+````
+
+## note
+```
+http port: 9999
+https port: 9191
+```
