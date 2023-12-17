@@ -1,12 +1,8 @@
 import express from 'express'
 
 import * as http from 'http';
-
-
 const server = express();
 const PORT = 9999;
-
-
 
 
 export const proxyOpenRain = (req: any, res: any) => {

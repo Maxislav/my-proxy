@@ -7,11 +7,16 @@
   "license": "MIT",
   "scripts": {
     "dev": "node-dev src/index.js",
-    "n": "node -v",
-    "tsc-be:w": "tsc -w --project tsconfig-be.json"
+    "node-version": "node -v",
+    "tsc-be:w": "tsc -w --project tsconfig-be.json",
+    "tsc-be": "tsc --project tsconfig-be.json",
+    "ncc": "ncc",
+    "ncc:build": "ncc build dist/index.js -o build -s",
+    "super-prod": "npm run tsc-be && npm run ncc:build"
   },
   "dependencies": {
     "@types/jest": "^29.5.11",
+    "@vercel/ncc": "^0.38.1",
     "express": "^4.18.2",
     "node-dev": "^8.0.0",
     "typescript": "^5.3.3",
