@@ -39,6 +39,7 @@ const listener = server.listen(port, () => {
     const info = listener.address();
     console.log(`Server is listening on address ${info.address} port ${info.port}`);
 });
+server.setMaxListeners(20);
 server.on('connect', (req, clientSocket, head) => {
     console.log(clientSocket.remoteAddress, clientSocket.remotePort, req.method, req.url);
     const authHeader = req.headers['proxy-authorization'];
@@ -102,7 +103,13 @@ server.on('connect', (req, clientSocket, head) => {
             }
         };
         clientSocket.on('error', clientErrorHandler);
-        clientSocket.on('end', clientEndHandler);
+        //clientSocket.on('end', clientEndHandler)
+        clientSocket.once('end', () => {
+            // Your logic here
+            if (serverSocket) {
+                serverSocket.end();
+            }
+        });
         serverSocket.on('error', serverErrorHandler);
         serverSocket.on('end', serverEndHandler);
         serverSocket.on('connect', () => {
