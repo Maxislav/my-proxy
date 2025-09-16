@@ -18,7 +18,7 @@ pm2 start ecosystem.config.js
 ## note
 ```
 http port: 9999
-https port: 9197
+https port: 9007
 ```
 
 ## username pass
