@@ -18,15 +18,41 @@ const listener = server.listen(port, () => {
 });
 server.on('connect', (req, clientSocket, head) => {
     console.log(clientSocket.remoteAddress, clientSocket.remotePort, req.method, req.url);
-    if (!req.headers['proxy-authorization']) { // here you can add check for any username/password, I just check that this header must exist!
-        clientSocket.write([
-            'HTTP/1.1 407 Proxy Authentication Required',
-            'Proxy-Authenticate: Basic realm="proxy"',
-            'Proxy-Connection: close',
-        ].join('\r\n'));
-        clientSocket.end('\r\n\r\n'); // empty body
+    const authHeader = req.headers['proxy-authorization'];
+    if (!authHeader) {
+        clientSocket.write('HTTP/1.1 407 Proxy Authentication Required\r\nProxy-Authenticate: Basic realm="proxy"\r\n\r\n');
+        clientSocket.end();
         return;
     }
+    // 2. Декодируем и проверяем учетные данные
+    try {
+        const base64String = authHeader.split(' ')[1]; // получаем строку Base64
+        const decoded = Buffer.from(base64String, 'base64').toString(); // декодируем Base64
+        const [username, password] = decoded.split(':'); // разделяем на имя и пароль
+        // Здесь вы добавляете свою логику проверки
+        const expectedUsername = 'my';
+        const expectedPassword = 'pass';
+        if (username !== expectedUsername || password !== expectedPassword) {
+            clientSocket.write('HTTP/1.1 407 Proxy Authentication Required\r\nProxy-Authenticate: Basic realm="proxy"\r\n\r\n');
+            clientSocket.end();
+            return;
+        }
+    }
+    catch (e) {
+        // Обрабатываем ошибки декодирования или некорректного формата
+        clientSocket.write('HTTP/1.1 400 Bad Request\r\n\r\n');
+        clientSocket.end();
+        return;
+    }
+    // if (!req.headers['proxy-authorization']) { // here you can add check for any username/password, I just check that this header must exist!
+    //     clientSocket.write([
+    //         'HTTP/1.1 407 Proxy Authentication Required',
+    //         'Proxy-Authenticate: Basic realm="proxy"',
+    //         'Proxy-Connection: close',
+    //     ].join('\r\n'))
+    //     clientSocket.end('\r\n\r\n')  // empty body
+    //     return
+    // }
     const { port, hostname } = url.parse(`//${req.url}`, false, true); // extract destination host and port from CONNECT request
     if (hostname && port) {
         const serverErrorHandler = (err) => {

@@ -20,3 +20,10 @@ pm2 start ecosystem.config.js
 http port: 9999
 https port: 9191
 ```
+
+## username pass
+
+```
+const expectedUsername = 'my';
+const expectedPassword = 'pass';
+```
