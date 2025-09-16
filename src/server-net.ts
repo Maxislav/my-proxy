@@ -1,7 +1,7 @@
-import http = require('http')
+import * as http from 'http';
 const port = process.env.PORT || 9197
-import net = require('net')
-import url = require('url')
+import * as net from 'net';
+import * as url  from 'url';
 
 const requestHandler = (req, res) => { // discard all request to proxy server except HTTP/1.1 CONNECT method
     res.writeHead(405, {'Content-Type': 'text/plain'})
