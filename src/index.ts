@@ -40,7 +40,7 @@ export const proxyOpenRain = (req: any, res: any) => {
 //         res.send('Ololo')
 //     }
 // )
- server.get('*', proxyOpenRain)
+ //server.get('*', proxyOpenRain)
 
 server.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)

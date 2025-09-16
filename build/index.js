@@ -74,7 +74,7 @@ exports.proxyOpenRain = proxyOpenRain;
 //         res.send('Ololo')
 //     }
 // )
-server.get('*', exports.proxyOpenRain);
+//server.get('*', proxyOpenRain)
 server.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });
